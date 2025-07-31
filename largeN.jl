@@ -16,16 +16,12 @@ using Base.Threads
 using Roots
 using Combinatorics
 
-function main()
+function main(rK3)
     Random.seed!(1234)  # Set a random seed for reproducibility
     println("Threads: ", Threads.nthreads())
-    # Get parameters from command line arguments
-    println("Number of oscillators (n): ")
-    n = parse(Int,readline())
-    println("Lower bound for degree (lwbd): ")
-    lwbd = parse(Int,readline())
-    println("Upper bound for degree (upbd): ")
-    upbd = parse(Int,readline())
+    n = 100
+    lwbd = 10
+    upbd = 20
 
     A2, degree2, target = create_L_CL_UN(n, lwbd, upbd)
     A3, degree3 = create_3D(n, target)
@@ -71,7 +67,7 @@ function main()
     k2max = 2.0 * K2Crit
     dk = 0.1 * K2Crit
     k2 = k2min
-    k3 = 1.0 * K3Crit 
+    k3 = rK3 * K3Crit 
 
     dt = 0.01
     Tend = 30.0
@@ -161,9 +157,13 @@ function main()
     key_params = Dict("K2Crit" => K2Crit, "K3Crit" => K3Crit, "n" => n, "K2Crit_mean" => K2Crit_mean,
                       "K3Crit_mean" => K3Crit_mean, "Mean_deg" => mean(degree2), "Mean_deg3" => mean(degree3), "target_deg" => target)
     ID = rand(1:1000000)
-    @save "res_n_$(n)_ID_$(ID).jld2" k2rf R_tatf R_fdaf Rf_num k2rb R_tatb R_fdab Rb_num key_params
+    @save "res_n_$(n)_ID_$(ID)_rK3_$(rK3).jld2" k2rf R_tatf R_fdaf Rf_num k2rb R_tatb R_fdab Rb_num key_params
 
 end
 
 
-main()
+main(0.5)
+main(1.0)
+main(1.5)
+main(2.0)
+main(2.5)
