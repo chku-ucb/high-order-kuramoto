@@ -157,13 +157,13 @@ function main(rK3)
     key_params = Dict("K2Crit" => K2Crit, "K3Crit" => K3Crit, "n" => n, "K2Crit_mean" => K2Crit_mean,
                       "K3Crit_mean" => K3Crit_mean, "Mean_deg" => mean(degree2), "Mean_deg3" => mean(degree3), "target_deg" => target)
     ID = rand(1:1000000)
-    @save "res_n_$(n)_ID_$(ID)_rK3_$(rK3).jld2" k2rf R_tatf R_fdaf Rf_num k2rb R_tatb R_fdab Rb_num key_params
+    @save joinpath(script_dir,"results/res_n_$(n)_ID_$(ID)_rK3_$(rK3).jld2") k2rf R_tatf R_fdaf Rf_num k2rb R_tatb R_fdab Rb_num key_params
 
 end
 
 
 main(0.5)
-main(1.0)
-main(1.5)
-main(2.0)
-main(2.5)
+# main(1.0)
+# main(1.5)
+# main(2.0)
+# main(2.5)
